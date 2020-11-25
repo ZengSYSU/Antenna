@@ -215,4 +215,3 @@ class HFSS:
     def run(self):
         self.oDesktop.RestoreWindow()
         self.oDesign.Analyze('Setup1')
-

@@ -3,6 +3,7 @@ import paraCalc
 import wg
 import sim
 
+
 class Horn:
     def __init__(self, freq, HPE, HPH, wg_name=None):
         self.freq = freq

@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 from tkinter import Tk, Label, StringVar, Entry, Button, Frame, TOP
 import main
 
@@ -70,4 +69,3 @@ Button(frm, text='calc', command=calc).grid(row=4, column=0)
 Button(frm, text='hfss', command=hfss).grid(row=4, column=1)
 
 root.mainloop()
-

@@ -51,10 +51,9 @@ def calc(freq, HPE, HPH, a, b):
 
         R = B * (B - b) / (8 * lam * s)
 
-    return round(A, 2), round(B, 2), round(R, 2), round(s, 4), round(t, 4)
+    return round(A, 2), round(B, 2), round(R, 2)
 
 
 if __name__ == '__main__':
-    _A, _B, _R, _s, _t = calc(freq=8, HPE=9.89, HPH=12.62, a=35, b=17.5)
-    print(_A, _B, _R, _s, _t)
-
+    _A, _B, _R = calc(freq=10, HPE=20, HPH=30, a=22.86, b=10.16)
+    print(_A, _B, _R)
