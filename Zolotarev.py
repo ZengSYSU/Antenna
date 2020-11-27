@@ -227,7 +227,9 @@ if __name__ == '__main__':
     p1.grid(True)
     plt.xlabel('$x$', fontsize=20)
     plt.ylabel(r'$Z$ $(x,$ $m)$', fontsize=20)
-    p1.axis(fontsize=50)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
+#    p1.axis(fontsize=50)
     plt.show()    
 
 #    # Testing the 'Zolotarev2' function 
