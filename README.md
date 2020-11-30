@@ -1,1 +1,1 @@
-# Zeng's first project to a professional programmer
+# Zeng's first project on professional programming
