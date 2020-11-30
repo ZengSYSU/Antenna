@@ -23,7 +23,7 @@ class HFSS:
               ["NAME:NewProps",
                [_NAME, "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", _VALUE]]]])
 
-    def create_box(self, _xp, _yp, _zp_x, _y ,_z, _name):
+    def create_box(self, _xp, _yp, _zp, _x, _y, _z, _name):
         self.oEditor.CreateBox(
             [
                 "NAME:BoxParameters",
@@ -113,7 +113,7 @@ class HFSS:
             ]
         )
 
-    def set_material(self,_obj, _mat):
+    def set_material(self, _obj, _mat):
         self.oEditor.AssignMaterial(
             [
                 "NAME:Selections",
@@ -129,4 +129,46 @@ class HFSS:
                 "UseMaterialAppearance:=", False
             ])
 
-    def
+    def create_region(self, _fourth):
+        self.oEditor.CreateRegion(
+            [
+                "NAME:RegionParameters",
+                "+XPaddingType:=", "Absolute Offset",
+                "+XPadding:=", _fourth,
+                "-XPaddingType:=", "Absolute Offset",
+                "-XPadding:="	, _fourth,
+                "+YPaddingType:="	, "Absolute Offset",
+                "+YPadding:="		, _fourth,
+                "-YPaddingType:="	, "Absolute Offset",
+                "-YPadding:="		, _fourth,
+                "+ZPaddingType:="	, "Absolute Offset",
+                "+ZPadding:="		, _fourth,
+                "-ZPaddingType:="	, "Absolute Offset",
+                "-ZPadding:="		, _fourth
+            ],
+            [
+                "NAME:Attributes",
+                "Name:="	, "Region",
+                "Flags:="		, "Wireframe#",
+                "Color:="		, "(143 175 143)",
+                "Transparency:="	, 0,
+                "PartCoordinateSystem:=", "Global",
+                "UDMId:="		, "",
+                "MaterialValue:="	, "\"vacuum\"",
+                "SurfaceMaterialValue:=", "\"\"",
+                "SolveInside:="		, True,
+                "IsMaterialEditable:="	, True,
+                "UseMaterialAppearance:=", False
+            ]
+
+        )
+
+    def assign_radiation_region(self):
+        self.oModule.AssignRadiation(
+            [
+                "NAME:Rad1",
+                "Objects:="	, ["Region"],
+                "IsFssReference:="	, False,
+                "IsForPML:="		, False
+            ]
+        )
