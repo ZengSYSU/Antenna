@@ -5,10 +5,10 @@ import os
 
 class HFSS:
     def __init__(self):
-        self.oAnsoftApp = client.Dispatch('AnsoftHFSS.ElectronicsDesktop')
+        self.oAnsoftApp = client.Dispatch('AnsoftHfss.HfssScriptInterface')
         self.oDesktop = self.oAnsoftApp.GetAppDesktop()
         self.oProject = self.oDesktop.NewProject()
-        self.oProject.InsertDesgin('HFSS', 'HFSSDesign1', 'DrivenModal1', '')
+        self.oProject.InsertDesign('HFSS', 'HFSSDesign1', 'DrivenModal1', '')
         self.oDesign = self.oProject.SetActiveDesign("HFSSDesign1")
         self.oEditor = self.oDesign.SetActiveEditor("3D Modeler")
         self.oModule = self.oDesign.GetModule('BoundarySetup')
@@ -23,16 +23,16 @@ class HFSS:
               ["NAME:NewProps",
                [_NAME, "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", _VALUE]]]])
 
-    def create_box(self, _xp, _yp, _zp, _x, _y, _z, _name):
+    def create_box(self, _var_xp, _var_yp, _var_zp, _var_x, _var_y, _var_z, _name):
         self.oEditor.CreateBox(
             [
                 "NAME:BoxParameters",
-                "XPosition:=", "-" + _xp + "/2",
-                "YPosition:=", "-" + _yp + "/2",
+                "XPosition:=", '-' + _var_xp + '/2',
+                "YPosition:=", _var_yp,
                 "ZPosition:=", "0mm",
-                "XSize:=", _x,
-                "YSize:=", _y,
-                "ZSize:=", _z,
+                "XSize:=", _var_x,
+                "YSize:=", _var_y,
+                "ZSize:=", _var_z,
             ],
             [
                 "NAME:Attributes",
@@ -49,16 +49,16 @@ class HFSS:
                 "UseMaterialAppearance:=", False
             ])
 
-    def create_rectangle(self, _rxp, _ryp, _rzp, _rx, _ry, _name, _axis):
+    def create_rectangle(self, _var_rxp, _var_ryp, _var_rzp, _var_rx, _var_ry, _name, _axis):
         self.oEditor.CreateRectangle(
             [
                 "NAME:RectangleParameters",
                 "IsCovered:=", True,
-                "XStart:=", "-" + _rxp + "/2",
-                "YStart:=", "-" + _ryp + "/2",
-                "ZStart:=", _rzp,
-                "Width:=", _rx,
-                "Height:="	, _ry,
+                "XStart:=", '-' + _var_rxp + '/2',
+                "YStart:=", _var_ryp,
+                "ZStart:=", _var_rzp,
+                "Width:=", _var_rx,
+                "Height:="	, _var_ry,
                 "WhichAxis:="		, _axis
             ],
             [
@@ -113,7 +113,7 @@ class HFSS:
             ]
         )
 
-    def set_material(self, _obj, _mat):
+    def set_material(self, _obj, _mat='FR4_epoxy'):
         self.oEditor.AssignMaterial(
             [
                 "NAME:Selections",
@@ -124,27 +124,27 @@ class HFSS:
             [
                 "NAME:Attributes",
                 "MaterialValue:=", "\"" + _mat + "\"",
-                "SolveInside:="	, False,
+                "SolveInside:="	, True,
                 "IsMaterialEditable:="	, True,
                 "UseMaterialAppearance:=", False
             ])
 
-    def create_region(self, _fourth):
+    def create_region(self):
         self.oEditor.CreateRegion(
             [
                 "NAME:RegionParameters",
                 "+XPaddingType:=", "Absolute Offset",
-                "+XPadding:=", _fourth,
+                "+XPadding:=", '25mm',
                 "-XPaddingType:=", "Absolute Offset",
-                "-XPadding:="	, _fourth,
+                "-XPadding:="	, '25mm',
                 "+YPaddingType:="	, "Absolute Offset",
-                "+YPadding:="		, _fourth,
+                "+YPadding:="		, '25mm',
                 "-YPaddingType:="	, "Absolute Offset",
-                "-YPadding:="		, _fourth,
+                "-YPadding:="		, '25mm',
                 "+ZPaddingType:="	, "Absolute Offset",
-                "+ZPadding:="		, _fourth,
+                "+ZPadding:="		, '25mm',
                 "-ZPaddingType:="	, "Absolute Offset",
-                "-ZPadding:="		, _fourth
+                "-ZPadding:="		, '25mm'
             ],
             [
                 "NAME:Attributes",
@@ -172,10 +172,10 @@ class HFSS:
                 "IsForPML:="		, False
             ])
 
-    def assign_lumped(self, _obj, _start, _end):
+    def assign_port(self, _obj):
         self.oModule.AssignLumpedPort(
             "NAME:1",
-            "Objects:="	, _obj,
+            "Objects:="	,          _obj,
             "RenormalizeAllTerminals:=", True,
             "DoDeembed:="		, False,
             [
@@ -186,8 +186,8 @@ class HFSS:
                     "UseIntLine:="		, True,
                     [
                         "NAME:IntLine",
-                        "Start:="		, _start,
-                        "End:="			, _end
+                        "Start:="		, ["0mm", "7.4684943757722e-017mm", "-1.37772764904077e-016mm"],
+                        "End:="			, ["1.11022302462516e-016mm", "2.03334755731853e-016mm", "0.8mm"]
                     ],
                     "AlignmentGroup:="	, 0,
                     "CharImp:="		, "Zpi",
@@ -199,12 +199,12 @@ class HFSS:
             "Impedance:="		, "50ohm"
         )
 
-    def insert_setup(self, freq, max_passes):
+    def insert_setup(self, _freq, max_passes):
         self.oModule.InsertSetup("HfssDriven",
                                  [
                                      "NAME:Setup1",
                                      "AdaptMultipleFreqs:=", False,
-                                     "Frequency:="	, freq + "GHz",
+                                     "Frequency:="	, str(_freq) + "GHz",
                                      "MaxDeltaS:="		, 0.02,
                                      "PortsOnly:="		, False,
                                      "UseMatrixConv:="	, False,
