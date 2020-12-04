@@ -34,11 +34,11 @@ class MicroStrip:
         h.create_region()
         h.assign_radiation_region()
         # Assign port&E
-#        h.assign_perfecte()
+        h.assign_perfe('ground', 'patch', 'micro_strip')
         h.create_rectangle('wd', 0, 0, 'h', 'wd', 'port', 'Y')
         h.assign_port('port')
         # setup
-        h.insert_setup(self.freq, 6)
+        h.insert_setup(self.freq)
         h.insert_sweep(2, 12)
         h.insert_field_setup()
         h.create_report()

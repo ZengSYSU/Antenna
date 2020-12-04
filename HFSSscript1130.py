@@ -58,20 +58,20 @@ class HFSS:
                 "YStart:=", _var_ryp,
                 "ZStart:=", _var_rzp,
                 "Width:=", _var_rx,
-                "Height:="	, _var_ry,
-                "WhichAxis:="		, _axis
+                "Height:=", _var_ry,
+                "WhichAxis:=", _axis
             ],
             [
                 "NAME:Attributes",
-                "Name:="		, _name,
-                "Flags:="		, "",
-                "Color:="		, "(143 175 143)",
-                "Transparency:="	, 0,
+                "Name:=", _name,
+                "Flags:=", "",
+                "Color:=", "(143 175 143)",
+                "Transparency:=", 0,
                 "PartCoordinateSystem:=", "Global",
-                "UDMId:="		, "",
-                "MaterialValue:="	, "\"vacuum\"",
+                "UDMId:=", "",
+                "MaterialValue:=", "\"vacuum\"",
                 "SurfaceMaterialValue:=", "\"\"",
-                "SolveInside:="		, True,
+                "SolveInside:="	, True,
                 "IsMaterialEditable:="	, True,
                 "UseMaterialAppearance:=", False
             ])
@@ -172,81 +172,106 @@ class HFSS:
                 "IsForPML:="		, False
             ])
 
-    def assign_port(self, _obj):
-        self.oModule.AssignLumpedPort(
-            "NAME:1",
-            "Objects:="	,          _obj,
-            "RenormalizeAllTerminals:=", True,
-            "DoDeembed:="		, False,
+    def assign_perfe(self, _obj1, _obj2, _obj3):
+        self.oModule.AssignPerfectE(
             [
-                "NAME:Modes",
-                [
-                    "NAME:Mode1",
-                    "ModeNum:="		, 1,
-                    "UseIntLine:="		, True,
-                    [
-                        "NAME:IntLine",
-                        "Start:="		, ["0mm", "7.4684943757722e-017mm", "-1.37772764904077e-016mm"],
-                        "End:="			, ["1.11022302462516e-016mm", "2.03334755731853e-016mm", "0.8mm"]
-                    ],
-                    "AlignmentGroup:="	, 0,
-                    "CharImp:="		, "Zpi",
-                    "RenormImp:="		, "50ohm"
-                ]
-            ],
-            "ShowReporterFilter:="	, False,
-            "ReporterFilter:="	, [True],
-            "Impedance:="		, "50ohm"
-        )
-
-    def insert_setup(self, _freq, max_passes):
-        self.oModule.InsertSetup("HfssDriven",
-                                 [
-                                     "NAME:Setup1",
-                                     "AdaptMultipleFreqs:=", False,
-                                     "Frequency:="	, str(_freq) + "GHz",
-                                     "MaxDeltaS:="		, 0.02,
-                                     "PortsOnly:="		, False,
-                                     "UseMatrixConv:="	, False,
-                                     "MaximumPasses:="	, max_passes,
-                                     "MinimumPasses:="	, 1,
-                                     "MinimumConvergedPasses:=", 1,
-                                     "PercentRefinement:="	, 30,
-                                     "IsEnabled:="		, True,
-                                     "BasisOrder:="		, 1,
-                                     "DoLambdaRefine:="	, True,
-                                     "DoMaterialLambda:="	, True,
-                                     "SetLambdaTarget:="	, False,
-                                     "Target:="		, 0.3333,
-                                     "UseMaxTetIncrease:="	, False,
-                                     "PortAccuracy:="	, 2,
-                                     "UseABCOnPort:="	, False,
-                                     "SetPortMinMaxTri:="	, False,
-                                     "UseDomains:="		, False,
-                                     "UseIterativeSolver:="	, False,
-                                     "SaveRadFieldsOnly:="	, False,
-                                     "SaveAnyFields:="	, True,
-                                     "IESolverType:="	, "Auto",
-                                     "LambdaTargetForIESolver:=", 0.15,
-                                     "UseDefaultLambdaTgtForIESolver:=", True
-                                 ])
-
-    def insert_sweep(self, range1, range2):
-        self.oModule.InsertFrequencySweep(
+                "NAME:PerfE1",
+                "Objects:="	, [_obj1],
+                "InfGroundPlane:="	, False
+            ]),
+        self.oModule.AssignPerfectE(
             [
-                "NAME:Sweep",
-                "IsEnabled:="	, True,
-                "RangeType:="		, "LinearCount",
-                "RangeStart:="		, range1 + "GHz",
-                "RangeEnd:="		, range2 + "GHz",
-                "RangeCount:="		, 451,
-                "Type:="		, "Fast",
-                "SaveFields:="		, True,
-                "SaveRadFields:="	, False,
-                "GenerateFieldsForAllFreqs:=", False,
-                "ExtrapToDC:="		, False
+                "NAME:PerfE2",
+                "Objects:="	, [_obj2],
+                "InfGroundPlane:="	, False
+            ]),
+        self.oModule.AssignPerfectE(
+            [
+                "NAME:PerfE3",
+                "Objects:="	, [_obj3],
+                "InfGroundPlane:="	, False
             ]
         )
+
+    def assign_port(self, _obj):
+        self.oModule.AssignLumpedPort(
+            [
+                "NAME:1",
+                "Objects:=", [_obj],
+                "RenormalizeAllTerminals:=", True,
+                "DoDeembed:="	, False,
+                [
+                    "NAME:Modes",
+                    [
+                        "NAME:Mode1",
+                        "ModeNum:="		, 1,
+                        "UseIntLine:="		, True,
+                        [
+                            "NAME:IntLine",
+                            "Start:="		, ['0mm', '7.4684943757722e-017mm', '-1.37772764904077e-016mm'],
+                            "End:="			, ['1.11022302462516e-016mm', '2.03334755731853e-016mm', '0.8mm']
+                        ],
+                        "AlignmentGroup:="	, 0,
+                        "CharImp:="		, "Zpi",
+                        "RenormImp:="		, "50ohm"
+                    ]
+                ],
+                "ShowReporterFilter:="	, False,
+                "ReporterFilter:="	, [True],
+                "Impedance:="		, "50ohm"
+            ]
+        )
+
+    def insert_setup(self, _freq):
+        mod = self.oDesign.GetModule('AnalysisSetup')
+        mod.InsertSetup("HfssDriven",
+                        [
+                            "NAME:Setup1",
+                            "AdaptMultipleFreqs:=", False,
+                            "Frequency:=", str(_freq) + 'GHz',
+                            "MaxDeltaS:="	, 0.02,
+                            "PortsOnly:="		, False,
+                            "UseMatrixConv:="	, False,
+                            "MaximumPasses:="	, 6,
+                            "MinimumPasses:="	, 1,
+                            "MinimumConvergedPasses:=", 1,
+                            "PercentRefinement:="	, 30,
+                            "IsEnabled:="		, True,
+                            "BasisOrder:="		, 1,
+                            "DoLambdaRefine:="	, True,
+                            "DoMaterialLambda:="	, True,
+                            "SetLambdaTarget:="	, False,
+                            "Target:="		, 0.3333,
+                            "UseMaxTetIncrease:="	, False,
+                            "PortAccuracy:="	, 2,
+                            "UseABCOnPort:="	, False,
+                            "SetPortMinMaxTri:="	, False,
+                            "UseDomains:="		, False,
+                            "UseIterativeSolver:="	, False,
+                            "SaveRadFieldsOnly:="	, False,
+                            "SaveAnyFields:="	, True,
+                            "IESolverType:="	, "Auto",
+                            "LambdaTargetForIESolver:=", 0.15,
+                            "UseDefaultLambdaTgtForIESolver:=", True
+                        ]
+                        )
+
+    def insert_sweep(self, range1, range2):
+        mod = self.oDesign.GetModule("AnalysisSetup")
+        mod.InsertFrequencySweep("Setup1",
+                                 [
+                                     "NAME:Sweep",
+                                     "IsEnabled:="	, True,
+                                     "RangeType:="		, "LinearCount",
+                                     "RangeStart:="		, str(range1) + "GHz",
+                                     "RangeEnd:="		, str(range2) + "GHz",
+                                     "RangeCount:="		, 451,
+                                     "Type:="		, "Fast",
+                                     "SaveFields:="		, True,
+                                     "SaveRadFields:="	, False,
+                                     "GenerateFieldsForAllFreqs:=", False,
+                                     "ExtrapToDC:="		, False
+                                 ])
 
     def insert_field_setup(self):
         mod = self.oDesign.GetModule("RadField")
