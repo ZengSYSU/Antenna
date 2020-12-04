@@ -176,22 +176,9 @@ class HFSS:
         self.oModule.AssignPerfectE(
             [
                 "NAME:PerfE1",
-                "Objects:="	, [_obj1],
+                "Objects:="	, [_obj1, _obj2, _obj3],
                 "InfGroundPlane:="	, False
-            ]),
-        self.oModule.AssignPerfectE(
-            [
-                "NAME:PerfE2",
-                "Objects:="	, [_obj2],
-                "InfGroundPlane:="	, False
-            ]),
-        self.oModule.AssignPerfectE(
-            [
-                "NAME:PerfE3",
-                "Objects:="	, [_obj3],
-                "InfGroundPlane:="	, False
-            ]
-        )
+            ])
 
     def assign_port(self, _obj):
         self.oModule.AssignLumpedPort(
