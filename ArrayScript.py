@@ -6,7 +6,7 @@ import os
 class HFSS:
     def __init__(self):
         self.oAnsoftApp = client.Dispatch('AnsoftHfss.HfssScriptInterface')
-        self.oDesktop = self.oAnsoftApp.GetDesktop()
+        self.oDesktop = self.oAnsoftApp.GetAppDesktop()
         self.oProject = self.oDesktop.NewProject()
         self.oProject.InsertDesign('HFSS', 'HFSSDesign1', 'DrivenModal1', '')
         self.oDesign = self.oProject.SetActiveDesign('HFSSDesign1')
@@ -17,22 +17,11 @@ class HFSS:
         _NAME = 'NAME:' + _var_name
         _VALUE = str(_var_value) + 'in'
         self.oDesign.ChangeProperty(
-            [
-                "NAME:ALLTabs",
-                [
-                    "NAME:ProjectVariableTab",
-                    [
-                        "NAME:ProServers", "ProjectVariableTab"
-                    ],
-                    [
-                        "NAME:NewProps",
-                        [
-                            _NAME, "ProType:=", "VariableProp", "UserDef:=", True, "Value:=", _VALUE
-                        ]
-                    ]
-                ]
-            ]
-        )
+            ["NAME:AllTabs",
+             ["NAME:ProjectVariableTab",
+              ["NAME:PropServers", "ProjectVariables"],
+              ["NAME:NewProps",
+               [_NAME, "PropType:=", "VariableProp", "UserDef:=", True, "Value:=", _VALUE]]]])
 
     def create_box(self, _var_x, _var_y, _var_z, _var_dx, _var_dy, _var_dz, _name):
         self.oEditor.CreateBox(
