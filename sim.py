@@ -27,8 +27,8 @@ class HFSS:
         self.oEditor.CreateRectangle(
             [
                 "NAME:RectangleParameters",
-                "IsCovered:="	, True,
-                "XStart:="		, '-' + _var_x + '/2',
+                "IsCovered:=", True,
+                "XStart:="	, '-' + _var_x + '/2',
                 "YStart:="		, '-' + _var_y + '/2',
                 "ZStart:="		, _var_z,
                 "Width:="		, _var_x,

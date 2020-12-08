@@ -195,8 +195,8 @@ class HFSS:
                         "UseIntLine:="		, True,
                         [
                             "NAME:IntLine",
-                            "Start:="		, ['0mm', '7.4684943757722e-017mm', '-1.37772764904077e-016mm'],
-                            "End:="			, ['1.11022302462516e-016mm', '2.03334755731853e-016mm', '0.8mm']
+                            "Start:="		, ['0mm', '0mm', '0mm'],
+                            "End:="			, ['0mm', '0mm', '0.8mm']
                         ],
                         "AlignmentGroup:="	, 0,
                         "CharImp:="		, "Zpi",
@@ -268,10 +268,10 @@ class HFSS:
                 "UseCustomRadiationSurface:=", False,
                 "ThetaStart:="	, "0deg",
                 "ThetaStop:="		, "180deg",
-                "ThetaStep:="		, "2deg",
-                "PhiStart:="		, "0deg",
-                "PhiStop:="		, "360deg",
-                "PhiStep:="		, "2deg",
+                "ThetaStep:="		, "10deg",
+                "PhiStart:="		, "-180deg",
+                "PhiStop:="		, "180deg",
+                "PhiStep:="		, "10deg",
                 "UseLocalCS:="		, False
             ])
         mod.InsertFarFieldSphereSetup(
@@ -280,10 +280,10 @@ class HFSS:
                 "UseCustomRadiationSurface:=", False,
                 "ThetaStart:="	, "90deg",
                 "ThetaStop:="		, "90deg",
-                "ThetaStep:="		, "2deg",
-                "PhiStart:="		, "0deg",
-                "PhiStop:="		, "360deg",
-                "PhiStep:="		, "2deg",
+                "ThetaStep:="		, "10deg",
+                "PhiStart:="		, "-180deg",
+                "PhiStop:="		, "180deg",
+                "PhiStep:="		, "10deg",
                 "UseLocalCS:="		, False
             ])
         mod.InsertFarFieldSphereSetup(
@@ -292,10 +292,10 @@ class HFSS:
                 "UseCustomRadiationSurface:=", False,
                 "ThetaStart:="	, "0deg",
                 "ThetaStop:="		, "360deg",
-                "ThetaStep:="		, "2deg",
+                "ThetaStep:="		, "10deg",
                 "PhiStart:="		, "0deg",
                 "PhiStop:="		, "0deg",
-                "PhiStep:="		, "2deg",
+                "PhiStep:="		, "10deg",
                 "UseLocalCS:="		, False
             ])
         mod.InsertFarFieldSphereSetup(
@@ -304,10 +304,10 @@ class HFSS:
                 "UseCustomRadiationSurface:=", False,
                 "ThetaStart:="	, "0deg",
                 "ThetaStop:="		, "360deg",
-                "ThetaStep:="		, "2deg",
+                "ThetaStep:="		, "10deg",
                 "PhiStart:="		, "90deg",
                 "PhiStop:="		, "90deg",
-                "PhiStep:="		, "2deg",
+                "PhiStep:="		, "10deg",
                 "UseLocalCS:="		, False
             ]
         )
@@ -335,7 +335,7 @@ class HFSS:
             [
                 "Phi:="			, ["All"],
                 "Theta:="		, ["All"],
-                "Freq:="		, ["3GHz"]
+                "Freq:="		, ["All"]
             ],
             [
                 "Phi Component:="	, "Phi",
@@ -351,7 +351,7 @@ class HFSS:
             [
                 "Theta:="		, ["All"],
                 "Phi:="			, ["All"],
-                "Freq:="		, ["3GHz"]
+                "Freq:="		, ["All"]
             ],
             [
                 "Ang Component:="	, "Theta",
@@ -366,7 +366,7 @@ class HFSS:
             [
                 "Theta:="		, ["All"],
                 "Phi:="			, ["All"],
-                "Freq:="		, ["3GHz"]
+                "Freq:="		, ["All"]
             ],
             [
                 "Ang Component:="	, "Theta",
