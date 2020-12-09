@@ -11,8 +11,8 @@ frm = Frame(root)
 frm.pack()
 
 Label(frm, text='中频(GHz):').grid(row=0, column=0)
-Label(frm, text='阵元间距X(in):').grid(row=1, column=0)
-Label(frm, text='阵元间距Y(in):').grid(row=2, column=0)
+Label(frm, text='阵元间距X(mm):').grid(row=1, column=0)
+Label(frm, text='阵元间距Y(mm):').grid(row=2, column=0)
 
 
 def hfss():

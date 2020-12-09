@@ -12,10 +12,11 @@ class HFSS:
         self.oDesign = self.oProject.SetActiveDesign('HFSSDesign1')
         self.oEditor = self.oDesign.SetActiveEditor("3D Modeler")
         self.oModule = self.oDesign.GetModule('BoundarySetup')
+        self.id = id
 
     def set_var(self, _var_name, _var_value):
         _NAME = 'NAME:' + _var_name
-        _VALUE = str(_var_value) + 'in'
+        _VALUE = str(_var_value) + 'mm'
         self.oDesign.ChangeProperty(
             ["NAME:AllTabs",
              ["NAME:ProjectVariableTab",
@@ -49,6 +50,18 @@ class HFSS:
                 "UseMaterialAppearance:=", False
             ]
         )
+
+    def face_id(self, obj, x, y, z):
+        self.id = self.oEditor.GetFaceByPosition(
+            [
+                "NAME:FaceParameters",
+                "Object:=", [obj],
+                "XPosition:=", x,
+                "YPosition:=", y,
+                "ZPosition:=", z,
+            ]
+        )
+        print(self.id)
 
     def assign_master(self):
         mod = self.oDesign.GetModule("BoundarySetup")
