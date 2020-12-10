@@ -12,7 +12,7 @@ class HFSS:
         self.oDesign = self.oProject.SetActiveDesign('HFSSDesign1')
         self.oEditor = self.oDesign.SetActiveEditor("3D Modeler")
         self.oModule = self.oDesign.GetModule('BoundarySetup')
-        self.id = id
+        self.id = 0
 
     def set_var(self, _var_name, _var_value):
         _NAME = 'NAME:' + _var_name
@@ -51,24 +51,24 @@ class HFSS:
             ]
         )
 
-    def face_id(self, obj, x, y, z):
+    def face_id(self):
         self.id = self.oEditor.GetFaceByPosition(
             [
                 "NAME:FaceParameters",
-                "Object:=", [obj],
-                "XPosition:=", x,
-                "YPosition:=", y,
-                "ZPosition:=", z,
+                "BodyName:=", 'AirBox',
+                "XPosition:=", '5.08mm',
+                "YPosition:=", '11.43mm',
+                "ZPosition:=", '50.8mm',
             ]
         )
-        print(self.id)
+        return self.id
 
-    def assign_master(self):
+    def assign_master(self, _id1, _id2):
         mod = self.oDesign.GetModule("BoundarySetup")
         mod.AssignMaster(
             [
                 "NAME:Master1",
-                "Faces:="	, [40],
+                "Faces:="	, [_id1],
                 [
                     "NAME:CoordSysVector",
                     "Origin:="		, ["0.45in", "-0.05in", "1in"],
@@ -80,7 +80,7 @@ class HFSS:
         mod.AssignMaster(
             [
                 "NAME:Master2",
-                "Faces:=", [39],
+                "Faces:=", [_id2],
                 [
                     "NAME:CoordSysVector",
                     "Origin:="	,     ["0.45in", "0.95in", "1in"],
@@ -90,12 +90,12 @@ class HFSS:
             ]
         )
 
-    def assign_slave(self, _phi, _theta):
+    def assign_slave(self, _ida, _idb, _phi, _theta):
         mod = self.oDesign.GetModule("BoundarySetup")
         mod.AssignSlave(
             [
                 "NAME:Slave1",
-                "Faces:="	, [38],
+                "Faces:="	, [_ida],
                 [
                     "NAME:CoordSysVector",
                     "Origin:="		, ["-0.05in", "-0.05in", "1in"],
@@ -110,7 +110,7 @@ class HFSS:
         mod.AssignSlave(
             [
                 "NAME:Slave2",
-                "Faces:=", [37],
+                "Faces:=", [_idb],
                 [
                     "NAME:CoordSysVector",
                     "Origin:="	,     ["0.45in", "-0.05in", "1in"],
@@ -343,8 +343,8 @@ class HFSS:
                     "NAME:RegularArray",
                     "NumUCells:="		, _u,
                     "NumVCells:="		, _v,
-                    "CellUDist:="		, _ud,
-                    "CellVDist:="		, _vd,
+                    "CellUDist:="		, str(_ud) + 'mm',
+                    "CellVDist:="		, str(_vd) + 'mm',
                     "UDirnX:="		, "1",
                     "UDirnY:="		, "0",
                     "UDirnZ:="		, "0",
