@@ -38,6 +38,7 @@ class Array:
         h.create_report()
         h.save()
         h.run()
+        h.csv()
 
 
 if __name__ == '__main__':

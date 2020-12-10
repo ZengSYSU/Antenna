@@ -333,6 +333,15 @@ class HFSS:
             ], []
         )
 
+    def csv(self):
+        mod = self.oDesign.GetModule("ReportSetup")
+        mod.ExportToFile(
+            "rE Plot 1", "C:/Users/tee/Desktop/rE Plot 1.csv"
+        )
+        mod.ExportToFile(
+            "rE Plot 2", "C:/Users/tee/Desktop/rE Plot 2.csv"
+        )
+
     def array(self, _u, _v, _ud, _vd):
         mod = self.oDesign.GetModule("RadField")
         mod.EditAntennaArraySetup(
