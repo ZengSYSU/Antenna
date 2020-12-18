@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from tkinter import Tk, Label, StringVar, Entry, Button, Frame
-import main122
+import PatchMain
 
 root = Tk()
 root.title('微带天线')
@@ -15,7 +15,7 @@ Label(frm, text='中频(GHz):').grid(row=0, column=0)
 
 def hfss():
     f = float(v1.get())
-    micro = main122.MicroStrip(f)
+    micro = PatchMain.MicroStrip(f)
     micro.call_hfss()
 
 

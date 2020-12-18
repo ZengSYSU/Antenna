@@ -374,6 +374,18 @@ class HFSS:
             ], []
         )
 
+    def csv(self):
+        mod = self.oDesign.GetModule("ReportSetup")
+        mod.ExportToFile(
+            "Gain Plot 3", "C:/Users/tee/antenna-git/Gain Plot 3.csv"
+        )
+        mod.ExportToFile(
+            "Gain Plot 2", "C:/Users/tee/antenna-git/Gain Plot 2.csv"
+        )
+        mod.ExportToFile(
+            "S Parameter Plot 1", "C:/Users/tee/antenna-git/S Parameter Plot 1"
+        )
+
     def save(self):
         _base_path = os.getcwd()
         _prj_num = 1

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import HFSSscript1130
+import PatchScript
 
 
 class MicroStrip:
@@ -7,7 +7,7 @@ class MicroStrip:
         self.freq = freq
 
     def call_hfss(self):
-        h = HFSSscript1130.HFSS()
+        h = PatchScript.HFSS()
 
         h.set_variable('w', 16)
         h.set_variable('l', 32)
@@ -42,6 +42,7 @@ class MicroStrip:
         h.insert_sweep(2, 12)
         h.insert_field_setup()
         h.create_report()
+        h.csv()
         h.save()
         h.run()
 
