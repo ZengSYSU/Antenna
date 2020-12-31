@@ -9,24 +9,30 @@ _path = os.getcwd()
 os.chdir(_path)
 gain = pd.read_csv('Gain Plot 1.csv')
 
-Phi = gain.iloc[:, 0]
-phi = Phi.astype(np.float)
-for index in range(len(phi)):
-    phi[index] = math.radians(phi[index])
 Theta = gain.iloc[:, 1]
 theta = Theta.astype(np.float)
 for index in range(len(theta)):
     theta[index] = math.radians(theta[index])
+theta = theta.drop_duplicates(keep='first')
+# print(theta, theta.shape)
+
+i = int(len(gain)/len(theta))
+Phi = gain.iloc[:i, 0]
+phi = Phi.astype(np.float)
+for index in range(len(phi)):
+    phi[index] = math.radians(phi[index])
+# print(phi, phi.shape)
 
 dB_min = np.min(gain.iloc[:, 2])
 scale = abs(dB_min) + 1
 dB = gain.iloc[:, 2] + scale
+# print(type(dB))
+dB = np.array(dB.values).reshape(int(len(theta)), int(len(phi)))
 
 phi, theta = np.meshgrid(phi, theta)
-r = 1 * np.sin(theta)
+r = dB * np.sin(theta)
 x = r * np.cos(phi)
 y = r * np.sin(phi)
-z = 1 * np.cos(theta)
-
-mlab.mesh(x, y, z)
+z = dB * np.cos(theta)
+mlab.mesh(x, y, z, colormap="Spectral")
 mlab.show()
