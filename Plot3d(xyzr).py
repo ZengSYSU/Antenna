@@ -2,6 +2,7 @@
 import pandas as pd
 import numpy as np
 from mayavi import mlab
+from matplotlib import pyplot as plt
 import math
 import os
 
@@ -26,6 +27,12 @@ r = np.multiply(dB, np.sin(theta))
 x = np.multiply(r, np.cos(phi))
 y = np.multiply(r, np.sin(phi))
 z = np.multiply(dB, np.cos(theta))
+
+fig = plt.figure(figsize=(10, 7))
+ax = plt.axes(projection="3d")
+ax.scatter3D(x, y, z, marker='.', linewidths=0.1, color="blue")
+plt.title("3D scatter plot")
+plt.show()
 
 mlab.plot3d(x, y, z, r, tube_radius=1, colormap="Spectral")
 mlab.show()
