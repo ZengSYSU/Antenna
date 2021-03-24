@@ -551,7 +551,7 @@ class HFSS:
                                      "RangeType:="		, "LinearStep",
                                      "RangeStart:="		, str(range1) + "GHz",
                                      "RangeEnd:="		, str(range2) + "GHz",
-                                     "RangeStep:="		, "0.02GHz",
+                                     "RangeStep:="		, "0.06GHz",
                                      "Type:="		, "Fast",
                                      "SaveFields:="		, True,
                                      "SaveRadFields:="	, False,
@@ -567,10 +567,10 @@ class HFSS:
                 "UseCustomRadiationSurface:=", False,
                 "ThetaStart:="	, "0deg",
                 "ThetaStop:="		, "180deg",
-                "ThetaStep:="		, "10deg",
+                "ThetaStep:="		, "5deg",
                 "PhiStart:="		, "-180deg",
                 "PhiStop:="		, "180deg",
-                "PhiStep:="		, "10deg",
+                "PhiStep:="		, "5deg",
                 "UseLocalCS:="		, False
             ])
         mod.InsertFarFieldSphereSetup(
@@ -579,22 +579,35 @@ class HFSS:
                 "UseCustomRadiationSurface:=", False,
                 "ThetaStart:="	, "90deg",
                 "ThetaStop:="		, "90deg",
-                "ThetaStep:="		, "10deg",
+                "ThetaStep:="		, "5deg",
                 "PhiStart:="		, "-180deg",
                 "PhiStop:="		, "180deg",
-                "PhiStep:="		, "10deg",
+                "PhiStep:="		, "5deg",
                 "UseLocalCS:="		, False
             ])
         mod.InsertFarFieldSphereSetup(
             [
-                "NAME:yz",
+                "NAME:xz",
                 "UseCustomRadiationSurface:=", False,
                 "ThetaStart:="	, "0deg",
                 "ThetaStop:="		, "360deg",
-                "ThetaStep:="		, "10deg",
+                "ThetaStep:="		, "5deg",
+                "PhiStart:="		, "0deg",
+                "PhiStop:="		, "0deg",
+                "PhiStep:="		, "5deg",
+                "UseLocalCS:="		, False
+            ]
+        )
+        mod.InsertFarFieldSphereSetup(
+            [
+                "NAME:yz",
+                "UseCustomRadiationSurface:=", False,
+                "ThetaStart:=", "0deg",
+                "ThetaStop:="	, "360deg",
+                "ThetaStep:="		, "5deg",
                 "PhiStart:="		, "90deg",
                 "PhiStop:="		, "90deg",
-                "PhiStep:="		, "10deg",
+                "PhiStep:="		, "5deg",
                 "UseLocalCS:="		, False
             ]
         )
@@ -629,13 +642,13 @@ class HFSS:
             [
                 "Phi Component:="	, "Phi",
                 "Theta Component:="	, "Theta",
-                "Mag Component:="	, ["dB(GainTotal)"]
+                "Mag Component:="	, ["dB(RealizedGainTotal)"]
             ], []
         )
         mod.CreateReport(
             "Gain Plot 2", "Far Fields", "Radiation Pattern", "Setup1 : LastAdaptive",
             [
-                "Context:="	, "yz"
+                "Context:="	, "xz"
             ],
             [
                 "Theta:="		, ["All"],
@@ -644,7 +657,7 @@ class HFSS:
             ],
             [
                 "Ang Component:="	, "Theta",
-                "Mag Component:="	, ["dB(GainTotal)"]
+                "Mag Component:="	, ["dB(RealizedGainTotal)"]
             ], []
         )
         mod.CreateReport(
@@ -659,7 +672,22 @@ class HFSS:
             ],
             [
                 "Ang Component:="	, "Phi",
-                "Mag Component:="	, ["dB(GainTotal)"]
+                "Mag Component:="	, ["dB(RealizedGainTotal)"]
+            ], []
+        )
+        mod.CreateReport(
+            "Realized Gain Plot 1", "Far Fields", "Rectangular Plot", "Setup1 : LastAdaptive",
+            [
+                "Context:="		, "yz"
+            ],
+            [
+                "Theta:="		, ["All"],
+                "Phi:="			, ["All"],
+                "Freq:="		, ["All"]
+            ],
+            [
+                "X Component:="		, "Theta",
+                "Y Component:="		, ["dB(RealizedGainTotal)"]
             ], []
         )
 

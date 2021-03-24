@@ -32,14 +32,14 @@ class PatchArray:
         h.create_cylinder('Substrate', 0, 0, 0, '60mm', 'h', 'Z', 'air')
         h.change_color('Substrate', 64, 128, 128)
         # patch_antenna
-        h.create_rectangle('patch', 'w', 'l', '(l + d)', 'Y')
+        h.create_rectangle('patch', 'w', 'l', 'd', 'Y')
         h.change_color('patch', 0, 128, 0)
-        h.duplicate_line('patch', '(l + d)', 8)
+        h.duplicate_line('patch', 'd', 8)
         h.wrap_sheet()
         # wire
-        h.create_cylinder('Feed', 0, '54.8mm', '(hp0 - d - l)', '0.5mm', '5.2mm', 'Y', 'copper')
+        h.create_cylinder('Feed', 0, '54.8mm', '(hp0 - d)', '0.5mm', '5.2mm', 'Y', 'copper')
         h.change_color('Feed', 255, 255, 0)
-        h.duplicate_line('Feed', '(l + d)', 9)
+        h.duplicate_line('Feed', 'd', 9)
         h.delete('Feed')
         for index in range(len(self.hp)):
             h.subtract('Substrate', 'Feed_' + str(index + 1), True)
@@ -50,14 +50,14 @@ class PatchArray:
         h.create_object_from_faces()
         h.subtract('Substrate', 'GND', False)
         # lumped port
-        h.create_cycle('(hp0 - d - l)', '1.5mm')
-        h.duplicate_line('Port', '(l + d)', 9)
+        h.create_cycle('(hp0 - d)', '1.5mm')
+        h.duplicate_line('Port', 'd', 9)
         h.delete('Port')
-        _start = self.hp[0] - self.d - self.l - 0.5
-        _end = self.hp[0] - self.d - self.l - 1.5
+        _start = self.hp[0] - self.d - 0.5
+        _end = self.hp[0] - self.d - 1.5
         for index in range(len(self.hp)):
-            _start = _start + self.d + self.l
-            _end = _end + self.d + self.l
+            _start = _start + self.d
+            _end = _end + self.d
             h.subtract('GND_ObjectFromFace2', 'Port_' + str(index + 1), True)
             h.assign_port('Port_' + str(index + 1), _start, _end, 'lumpedPort' + str(index + 1))
         # boundaries
@@ -77,7 +77,7 @@ class PatchArray:
 
 if __name__ == '__main__':
     _freq = 2.44
-    _power = [0.35, 0.57, 0.836, 1]
+    _power = [1, 1, 1, 1]
     _phase = [0, 0, 0, 0]
     _patch = PatchArray(_freq, _power, _phase)
     _patch.size()
