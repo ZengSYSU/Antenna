@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import geatpy as ea
 import numpy as np
+import math
 
 
 class MyProblem(ea.Problem):  # 继承Problem父类
@@ -24,6 +25,9 @@ class MyProblem(ea.Problem):  # 继承Problem父类
         psi = np.pi * np.cos(theta) + epsilon
         pop.ObjV = np.zeros((pop.Phen.shape[0], self.M))  # 计算目标函数值，赋值给pop种群对象的ObjV属性
         pop.ObjV[:, 0] = np.sin(psi * 4) / np.sin(psi * 0.5)
+        for i in range(pop.Phen.shape[0]):
+            if math.isnan(pop.ObjV[i, 0]) is True:
+                pop.ObjV[i, 0] = 8
         pop.ObjV[:, 1] = abs(theta - 0.25 * np.pi)
 
 
@@ -32,7 +36,7 @@ if __name__ == '__main__':
     problem = MyProblem()  # 生成问题对象
     """==================================种群设置==============================="""
     Encoding = 'RI'  # 编码方式
-    NIND = 500  # 种群规模
+    NIND = 1000  # 种群规模
     Field = ea.crtfld(Encoding, problem.varTypes, problem.ranges, problem.borders,
                       [10] * len(problem.varTypes))  # 创建区域描述器
     population = ea.Population(Encoding, Field, NIND)  # 实例化种群对象（此时种群还没被初始化，仅仅是完成种群对象的实例化）
@@ -41,7 +45,7 @@ if __name__ == '__main__':
     myAlgorithm.mutOper.Pm = 0.2  # 修改变异算子的变异概率
     myAlgorithm.recOper.XOVR = 0.9  # 修改交叉算子的交叉概率
     myAlgorithm.MAXGEN = 200  # 最大进化代数
-    myAlgorithm.logTras = 1  # 设置每多少代记录日志，若设置成0则表示不记录日志
+    myAlgorithm.logTras = 0  # 设置每多少代记录日志，若设置成0则表示不记录日志
     myAlgorithm.verbose = True  # 设置是否打印输出日志信息
     myAlgorithm.drawing = 1  # 设置绘图方式（0：不绘图；1：绘制结果图；2：绘制目标空间过程动画；3：绘制决策空间过程动画）
     """==========================调用算法模板进行种群进化=========================
@@ -54,5 +58,7 @@ if __name__ == '__main__':
     print('The number of evolution is: %s' % myAlgorithm.evalsNum)
     if NDSet.sizes != 0:
         print('The objective value of the best solution is: %s' % NDSet.ObjV[0][0], NDSet.ObjV[0][1])
+        print('非支配个体数：%d 个' % NDSet.sizes)
+        print(math.degrees(NDSet.Phen[0, 0]), math.degrees(NDSet.Phen[0, 1]))
     else:
         print('Did not find any feasible solution.')
