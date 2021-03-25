@@ -9,7 +9,7 @@ def size(freq):
     hp = [0, 0, 0, 0, 0, 0, 0, 0]
     if freq >= 0:
         # l, w, xf = 54.4, 52.9, 15
-        l, w, xf = 56, 54, 15
+        l, w, xf = 56.2, 41, 16
         d = (300/freq) * 0.5
         for index in range(len(hp)):
             hp[index] = l / 2 - xf + (index + 1) * round(d, 3)
