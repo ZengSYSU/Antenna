@@ -666,8 +666,8 @@ class HFSS:
                 "Context:="	, "xy"
             ],
             [
-                "Theta:="		, ["All"],
                 "Phi:="			, ["All"],
+                "Theta:="		, ["All"],
                 "Freq:="		, ["All"]
             ],
             [
@@ -694,13 +694,16 @@ class HFSS:
     def csv(self):
         mod = self.oDesign.GetModule("ReportSetup")
         mod.ExportToFile(
-            "Gain Plot 3", "C:/Users/tee/antenna-git/Gain Plot 3.csv"
+            "Gain Plot 2", 'C:/Users/tee/PycharmProjects/Gain Plot 2.csv'
         )
         mod.ExportToFile(
-            "Gain Plot 2", "C:/Users/tee/antenna-git/Gain Plot 2.csv"
+            "Gain Plot 3", 'C:/Users/tee/PycharmProjects/Gain Plot 3.csv'
         )
         mod.ExportToFile(
-            "S Parameter Plot 1", "C:/Users/tee/antenna-git/S Parameter Plot 1"
+            "Gain Plot 1", 'C:/Users/tee/PycharmProjects/Gain Plot 1.csv'
+        )
+        mod.ExportToFile(
+            "S Parameter Plot 1", 'C:/Users/tee/PycharmProjects/S Parameter Plot 1.csv'
         )
 
     def save(self):

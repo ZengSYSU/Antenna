@@ -10,7 +10,7 @@ root.resizable(width=False, height=False)
 frm = Frame(root)
 frm.pack()
 
-Label(frm, text='中频(GHz):').grid(row=0, column=0)
+Label(frm, text='工作频率(GHz):').grid(row=0, column=0)
 Label(frm, text='幅度(W):').grid(row=1, column=0)
 Label(frm, text='相位(deg):').grid(row=3, column=0)
 

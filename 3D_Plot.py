@@ -10,14 +10,14 @@ os.chdir(_path)
 gain = pd.read_csv('Gain Plot 1.csv')
 
 Theta = gain.iloc[:, 1]
-theta = Theta.astype(np.float)
+theta = Theta.astype(np.float64)
 for index in range(len(theta)):
     theta[index] = math.radians(theta[index])
 theta = theta.drop_duplicates(keep='first')
 
 i = int(len(gain)/len(theta))
 Phi = gain.iloc[:i, 0]
-phi = Phi.astype(np.float)
+phi = Phi.astype(np.float64)
 for index in range(len(phi)):
     phi[index] = math.radians(phi[index])
 

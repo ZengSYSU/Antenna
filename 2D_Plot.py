@@ -20,7 +20,7 @@ plt.xlabel('Freq[GHz]')
 plt.ylabel('dB(S(1,1))')
 
 theta = gain.iloc[:, 0]
-theta_f = theta.astype(np.float)
+theta_f = theta.astype(np.float64)
 for index in range(len(theta_f)):
     theta_f[index] = math.radians(theta_f[index])
 E = gain.iloc[:, 1]

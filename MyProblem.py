@@ -24,11 +24,18 @@ class MyProblem(ea.Problem):  # 继承Problem父类
         theta = pop.Phen[:, 1]
         psi = np.pi * np.cos(theta) + epsilon
         pop.ObjV = np.zeros((pop.Phen.shape[0], self.M))  # 计算目标函数值，赋值给pop种群对象的ObjV属性
-        pop.ObjV[:, 0] = np.sin(psi * 4) / np.sin(psi * 0.5)
         for i in range(pop.Phen.shape[0]):
-            if math.isnan(pop.ObjV[i, 0]) is True:
+            if psi[i] != 0:
+                pop.ObjV[i, 0] = np.sin(psi[i] * 4) / np.sin(psi[i] * 0.5)
+            else:
                 pop.ObjV[i, 0] = 8
-        pop.ObjV[:, 1] = abs(theta - 0.25 * np.pi)
+        # pop.ObjV[:, 0] = np.sin(psi * 4) / np.sin(psi * 0.5)
+        # for i in range(pop.Phen.shape[0]):
+        #    if math.isnan(pop.ObjV[i, 0]) is True:
+        #        pop.ObjV[i, 0] = 8
+        # pop.ObjV[:, 1] = abs(theta - 0.25 * np.pi)
+        # pop.ObjV[:, 1] = abs(theta - np.pi/6.0)
+        pop.ObjV[:, 1] = abs(theta - np.pi/3.0)
 
 
 if __name__ == '__main__':

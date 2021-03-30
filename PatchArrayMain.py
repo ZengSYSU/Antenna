@@ -72,7 +72,8 @@ class PatchArray:
                        self.phase[0], self.phase[1], self.phase[2], self.phase[3])
         h.create_report()
         h.save()
-        # h.run()
+        h.run()
+        h.csv()
 
 
 if __name__ == '__main__':
