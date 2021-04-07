@@ -434,22 +434,22 @@ class HFSS:
                 [
                     "Name:="		, "lumpedPort2:1",
                     "Magnitude:="	, str(_mag2) + 'W',
-                    "Phase:="		, str(_phase1) + "deg"
+                    "Phase:="		, str(_phase2) + "deg"
                 ],
                 [
                     "Name:="		, "lumpedPort3:1",
                     "Magnitude:="	, str(_mag3) + 'W',
-                    "Phase:="		, str(_phase2) + "deg"
+                    "Phase:="		, str(_phase3) + "deg"
                 ],
                 [
                     "Name:="		, "lumpedPort4:1",
                     "Magnitude:="	, str(_mag4) + 'W',
-                    "Phase:="		, str(_phase2) + "deg"
+                    "Phase:="		, str(_phase4) + "deg"
                 ],
                 [
                     "Name:="		, "lumpedPort5:1",
                     "Magnitude:="		, str(_mag4) + 'W',
-                    "Phase:="		, str(_phase3) + "deg"
+                    "Phase:="		, str(_phase4) + "deg"
                 ],
                 [
                     "Name:="		, "lumpedPort6:1",
@@ -459,12 +459,12 @@ class HFSS:
                 [
                     "Name:="		, "lumpedPort7:1",
                     "Magnitude:="		, str(_mag2) + 'W',
-                    "Phase:="		, str(_phase4) + "deg"
+                    "Phase:="		, str(_phase2) + "deg"
                 ],
                 [
                     "Name:="		, "lumpedPort8:1",
                     "Magnitude:="		, str(_mag1) + 'W',
-                    "Phase:="		, str(_phase4) + "deg"
+                    "Phase:="		, str(_phase1) + "deg"
                 ]
             ])
 
