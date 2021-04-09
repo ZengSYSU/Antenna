@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-# import geatpy as ea
-import numpy as np
 
 
 def size(freq):
@@ -9,14 +7,14 @@ def size(freq):
     hp = [0, 0, 0, 0, 0, 0, 0, 0]
     if freq >= 0:
         # l, w, xf = 54.4, 52.9, 15  # d = l + d
-        # l, w, xf = 54.416, 52, 8.576  # CalcPatch
-        l, w, xf = 56, 46, 16
+        l, w, xf = 56.7, 53.2, 17.5
         d = (300/freq) * 0.5
         for index in range(len(hp)):
-            hp[index] = l / 2 - xf + (index + 1) * round(d, 3)
-            hp[index] = round(hp[index], 3)
-        h = round((hp[7] + round(d, 3) + 0.5 * l + xf), 3)
-
+            #  hp[index] = l / 2 - xf + (index + 1) * round(d, 3)
+            #  hp[index] = round(hp[index], 3)
+            hp[index] = w/2.0 + (index + 1) * round(d, 3)
+        #  h = round((hp[7] + round(d, 3) + 0.5 * l + xf), 3)
+        h = round(hp[7] + round(d, 3) + w/2.0)
     return l, w, h, hp, round(d, 3), xf
 
 

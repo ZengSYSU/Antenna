@@ -24,7 +24,7 @@ class PatchArray:
         h.set_variable('xf', self.xf)
         h.set_variable('h', self.h)
         for index in range(len(self.hp)):
-            h.set_variable('hp' + str(index), self.hp[index])
+            h.set_variable('hp' + str(index), self.w/2.0 + (index + 1) * self.d)  # self.hp[index]
 
         # tail_rod
         h.override(True)
@@ -32,7 +32,7 @@ class PatchArray:
         h.create_cylinder('Substrate', 0, 0, 0, '60mm', 'h', 'Z', 'air')
         h.change_color('Substrate', 64, 128, 128)
         # patch_antenna
-        h.create_rectangle('patch', 'w', 'l', 'd', 'Y')
+        h.create_rectangle('patch', '(-xf - l/2)', '(hp0 - w/2)', 'w', 'l', 'Y')
         h.change_color('patch', 0, 128, 0)
         h.duplicate_line('patch', 'd', 8)
         h.wrap_sheet()
@@ -53,8 +53,10 @@ class PatchArray:
         h.create_cycle('(hp0 - d)', '1.5mm')
         h.duplicate_line('Port', 'd', 9)
         h.delete('Port')
-        _start = self.hp[0] - self.d - 0.5
-        _end = self.hp[0] - self.d - 1.5
+        # _start = self.hp[0] - self.d - 0.5
+        # _end = self.hp[0] - self.d - 1.5
+        _start = self.w/2.0 - 0.5
+        _end = self.w/2.0 - 1.5
         for index in range(len(self.hp)):
             _start = _start + self.d
             _end = _end + self.d
@@ -72,7 +74,7 @@ class PatchArray:
                        self.phase[0], self.phase[1], self.phase[2], self.phase[3])
         h.create_report()
         h.save()
-        h.run()
+        # h.run()
         h.csv()
 
 

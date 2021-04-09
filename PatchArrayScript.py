@@ -50,16 +50,16 @@ class HFSS:
                 "UseMaterialAppearance:=", False
             ])
 
-    def create_rectangle(self, _name, _var_x, _var_y, _var_zp, _axis):
+    def create_rectangle(self, _name, _var_xp, _var_zp, _var_x, _var_y, _axis):
         self.oEditor.CreateRectangle(
             [
                 "NAME:RectangleParameters",
                 "IsCovered:=", True,
-                "XStart:=", '-' + _var_x + '/2',
+                "XStart:=", _var_xp,
                 "YStart:=", '60mm',
                 "ZStart:=", _var_zp,
-                "Width:=", _var_y,
-                "Height:=", _var_x,
+                "Width:=", _var_x,
+                "Height:=", _var_y,
                 "WhichAxis:=", _axis
             ],
             [
@@ -565,12 +565,12 @@ class HFSS:
             [
                 "NAME:Infinite Sphere1",
                 "UseCustomRadiationSurface:=", False,
-                "ThetaStart:="	, "0deg",
+                "ThetaStart:="	, "-180deg",
                 "ThetaStop:="		, "180deg",
-                "ThetaStep:="		, "5deg",
-                "PhiStart:="		, "-180deg",
-                "PhiStop:="		, "180deg",
-                "PhiStep:="		, "5deg",
+                "ThetaStep:="		, "1deg",
+                "PhiStart:="		, "0deg",
+                "PhiStop:="		, "360deg",
+                "PhiStep:="		, "1deg",
                 "UseLocalCS:="		, False
             ])
         mod.InsertFarFieldSphereSetup(
@@ -580,18 +580,18 @@ class HFSS:
                 "ThetaStart:="	, "90deg",
                 "ThetaStop:="		, "90deg",
                 "ThetaStep:="		, "5deg",
-                "PhiStart:="		, "-180deg",
-                "PhiStop:="		, "180deg",
-                "PhiStep:="		, "5deg",
+                "PhiStart:="		, "0deg",
+                "PhiStop:="		, "360deg",
+                "PhiStep:="		, "1deg",
                 "UseLocalCS:="		, False
             ])
         mod.InsertFarFieldSphereSetup(
             [
                 "NAME:xz",
                 "UseCustomRadiationSurface:=", False,
-                "ThetaStart:="	, "0deg",
-                "ThetaStop:="		, "360deg",
-                "ThetaStep:="		, "5deg",
+                "ThetaStart:="	, "-180deg",
+                "ThetaStop:="		, "180deg",
+                "ThetaStep:="		, "1deg",
                 "PhiStart:="		, "0deg",
                 "PhiStop:="		, "0deg",
                 "PhiStep:="		, "5deg",
@@ -602,9 +602,9 @@ class HFSS:
             [
                 "NAME:yz",
                 "UseCustomRadiationSurface:=", False,
-                "ThetaStart:=", "0deg",
-                "ThetaStop:="	, "360deg",
-                "ThetaStep:="		, "5deg",
+                "ThetaStart:=", "-180deg",
+                "ThetaStop:="	, "180deg",
+                "ThetaStep:="		, "1deg",
                 "PhiStart:="		, "90deg",
                 "PhiStop:="		, "90deg",
                 "PhiStep:="		, "5deg",
