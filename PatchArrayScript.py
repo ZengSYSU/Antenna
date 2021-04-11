@@ -323,11 +323,7 @@ class HFSS:
                 "SolveInside:="		, True,
                 "IsMaterialEditable:="	, True,
                 "UseMaterialAppearance:=", False
-            ]
-
-        )
-
-    def assign_radiation_region(self):
+            ])
         self.oModule.AssignRadiation(
             [
                 "NAME:Rad1",
@@ -539,8 +535,7 @@ class HFSS:
                             "IESolverType:="	, "Auto",
                             "LambdaTargetForIESolver:=", 0.15,
                             "UseDefaultLambdaTgtForIESolver:=", True
-                        ]
-                        )
+                        ])
 
     def insert_sweep(self, range1, range2):
         mod = self.oDesign.GetModule("AnalysisSetup")
@@ -648,7 +643,7 @@ class HFSS:
         mod.CreateReport(
             "Gain Plot 2", "Far Fields", "Radiation Pattern", "Setup1 : LastAdaptive",
             [
-                "Context:="	, "xz"
+                "Context:="	, "yz"
             ],
             [
                 "Theta:="		, ["All"],

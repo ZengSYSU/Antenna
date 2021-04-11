@@ -5,8 +5,8 @@ from win32com import client
 def Prj(_phase1, _phase2, _phase3, _phase4, _phase5, _phase6, _phase7, _phase8):
     oAnsoftApp = client.Dispatch('AnsoftHfss.HfssScriptInterface')
     oDesktop = oAnsoftApp.GetAppDesktop()
-    oDesktop.OpenProject("C:/Users/tee/PycharmProjects/Prj2.aedt")
-    oProject = oDesktop.SetActiveProject("Prj2")
+    oDesktop.OpenProject("C:/Users/tee/PycharmProjects/Prj4.aedt")
+    oProject = oDesktop.SetActiveProject("Prj4")
     oDesign = oProject.SetActiveDesign("HFSSDesign1")
     oModule = oDesign.GetModule("Solutions")
     oModule.EditSources(
@@ -59,7 +59,7 @@ def Prj(_phase1, _phase2, _phase3, _phase4, _phase5, _phase6, _phase7, _phase8):
     oModule = oDesign.GetModule("ReportSetup")
     oModule.ExportToFile("Gain Plot 2", "C:/Users/tee/PycharmProjects/Gain Plot 2.csv")
     oProject.save()
-    oDesktop.CloseProject("Prj2")
+    oDesktop.CloseProject("Prj4")
 
 
 if __name__ == '__main__':

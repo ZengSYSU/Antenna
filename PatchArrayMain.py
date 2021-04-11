@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import PatchArrayScript
 import CalcPara
+import numpy as np
 
 
 class PatchArray:
@@ -8,12 +9,12 @@ class PatchArray:
         self.freq = freq
         self.power = power
         self.phase = phase
-        self.hp = [0, 0, 0, 0, 0, 0, 0, 0]
-        self.l, self.w, self.d, self.xf, self.h = None, None, None, None, None
+        self.hp = np.zeros(8)
+        self.l, self.w, self.d, self.xf = None, None, None, None
 
     def size(self):
-        self.l, self.w, self.h, self.hp, self.d, self.xf = CalcPara.size(self.freq)
-        return self.l, self.w, self.h, self.hp, self.d, self.xf
+        self.l, self.w, self.hp, self.d, self.xf = CalcPara.size(self.freq)
+        return self.l, self.w, self.hp, self.d, self.xf
 
     def call_hfss(self):
         h = PatchArrayScript.HFSS()
@@ -22,22 +23,22 @@ class PatchArray:
         h.set_variable('w', self.w)
         h.set_variable('d', self.d)
         h.set_variable('xf', self.xf)
-        h.set_variable('h', self.h)
+        h.set_variable('h', self.w + 9 * self.d)
         for index in range(len(self.hp)):
             h.set_variable('hp' + str(index), self.w/2.0 + (index + 1) * self.d)  # self.hp[index]
 
         # tail_rod
         h.override(True)
-        h.create_cylinder('GND', 0, 0, 0, '55mm', 'h', 'Z', 'aluminum')
-        h.create_cylinder('Substrate', 0, 0, 0, '60mm', 'h', 'Z', 'air')
+        h.create_cylinder('GND', 0, 0, 0, '55mm', '(w + 9 * d)', 'Z', 'aluminum')
+        h.create_cylinder('Substrate', 0, 0, 0, '60mm', '(w + 9 * d)', 'Z', 'air')
         h.change_color('Substrate', 64, 128, 128)
         # patch_antenna
-        h.create_rectangle('patch', '(-xf - l/2)', '(hp0 - w/2)', 'w', 'l', 'Y')
+        h.create_rectangle('patch', '(-xf - l/2)', 'd', 'w', 'l', 'Y')
         h.change_color('patch', 0, 128, 0)
         h.duplicate_line('patch', 'd', 8)
         h.wrap_sheet()
         # wire
-        h.create_cylinder('Feed', 0, '54.8mm', '(hp0 - d)', '0.5mm', '5.2mm', 'Y', 'copper')
+        h.create_cylinder('Feed', 0, '54.8mm', 'w/2', '0.5mm', '5.2mm', 'Y', 'copper')
         h.change_color('Feed', 255, 255, 0)
         h.duplicate_line('Feed', 'd', 9)
         h.delete('Feed')
@@ -45,12 +46,12 @@ class PatchArray:
             h.subtract('Substrate', 'Feed_' + str(index + 1), True)
             h.solve_inside('Feed_' + str(index + 1))
         # GND
-        h.create_box('50mm', '54.8mm', 'h', 'Tool')
+        h.create_box('50mm', '54.8mm', '(w + 9 * d)', 'Tool')
         h.subtract('GND', 'Tool', False)
         h.create_object_from_faces()
         h.subtract('Substrate', 'GND', False)
         # lumped port
-        h.create_cycle('(hp0 - d)', '1.5mm')
+        h.create_cycle('w/2', '1.5mm')
         h.duplicate_line('Port', 'd', 9)
         h.delete('Port')
         # _start = self.hp[0] - self.d - 0.5
@@ -64,8 +65,7 @@ class PatchArray:
             h.assign_port('Port_' + str(index + 1), _start, _end, 'lumpedPort' + str(index + 1))
         # boundaries
         h.assign_perfe('GND_ObjectFromFace1', 'GND_ObjectFromFace2')
-        h.create_region('d')
-        h.assign_radiation_region()
+        h.create_region('d/2')
         # setup
         h.insert_setup(self.freq)
         h.insert_sweep(self.freq - 0.15, self.freq + 0.15)
