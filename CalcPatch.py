@@ -10,7 +10,8 @@ class Patch:
         self.freq = freq
         self.h = h
         self.er = er
-        self.length, self.w, self.xf = None, None, None
+        self.hp = np.zeros(8)
+        self.length, self.w, self.xf, self.d = None, None, None, None
 
     def Calc(self):
         c = 3e2  # freq = 2.44e9  # hz 工作频率
@@ -35,10 +36,14 @@ class Patch:
         Y0 = (self.length / np.pi) * np.arccos(math.sqrt(50 / Rin0))
         self.xf = self.length * 0.5 - Y0
         # 贴片天线尺寸理论值
-        print(self.length, self.w, self.xf)
         self.length = round(self.length, 5)
         self.w = round(self.w, 5)
         self.xf = round(self.xf, 5)
+        self.d = (300 / self.freq) * 0.5
+        for index in range(len(self.hp)):
+            self.hp[index] = round(self.w / 2.0 + (index + 1) * self.d, 3)
+        print(self.length, self.w, self.xf, self.hp, round(self.d, 5))
+        return self.length, self.w, self.xf, self.hp, round(self.d, 5)
 
 
 if __name__ == '__main__':

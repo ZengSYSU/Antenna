@@ -546,7 +546,7 @@ class HFSS:
                                      "RangeType:="		, "LinearStep",
                                      "RangeStart:="		, str(range1) + "GHz",
                                      "RangeEnd:="		, str(range2) + "GHz",
-                                     "RangeStep:="		, "0.06GHz",
+                                     "RangeStep:="		, "0.01GHz",
                                      "Type:="		, "Fast",
                                      "SaveFields:="		, True,
                                      "SaveRadFields:="	, False,
@@ -604,8 +604,7 @@ class HFSS:
                 "PhiStop:="		, "90deg",
                 "PhiStep:="		, "5deg",
                 "UseLocalCS:="		, False
-            ]
-        )
+            ])
 
     def create_report(self):
         mod = self.oDesign.GetModule("ReportSetup")
@@ -638,8 +637,7 @@ class HFSS:
                 "Phi Component:="	, "Phi",
                 "Theta Component:="	, "Theta",
                 "Mag Component:="	, ["dB(RealizedGainTotal)"]
-            ], []
-        )
+            ], [])
         mod.CreateReport(
             "Gain Plot 2", "Far Fields", "Radiation Pattern", "Setup1 : LastAdaptive",
             [
@@ -653,23 +651,21 @@ class HFSS:
             [
                 "Ang Component:="	, "Theta",
                 "Mag Component:="	, ["dB(RealizedGainTotal)"]
-            ], []
-        )
+            ], [])
         mod.CreateReport(
             "Gain Plot 3", "Far Fields", "Radiation Pattern", "Setup1 : LastAdaptive",
             [
-                "Context:="	, "xy"
+                "Context:="	, "xz"
             ],
             [
-                "Phi:="			, ["All"],
                 "Theta:="		, ["All"],
+                "Phi:="		,     ["All"],
                 "Freq:="		, ["All"]
             ],
             [
-                "Ang Component:="	, "Phi",
+                "Ang Component:="	, "Theta",
                 "Mag Component:="	, ["dB(RealizedGainTotal)"]
-            ], []
-        )
+            ], [])
         mod.CreateReport(
             "Realized Gain Plot 1", "Far Fields", "Rectangular Plot", "Setup1 : LastAdaptive",
             [
@@ -683,23 +679,24 @@ class HFSS:
             [
                 "X Component:="		, "Theta",
                 "Y Component:="		, ["dB(RealizedGainTotal)"]
-            ], []
-        )
+            ], [])
 
-    def csv(self):
+    def csv(self, _path, _bool):
+        if _bool is False:
+            _path = os.getcwd()
         mod = self.oDesign.GetModule("ReportSetup")
+        _path = os.path.join(_path, 'Gain Plot 1.csv')
         mod.ExportToFile(
-            "Gain Plot 2", 'C:/Users/tee/PycharmProjects/Gain Plot 2.csv'
-        )
+            "Gain Plot 1", _path)
+        _path = os.path.join(_path, 'Gain Plot 2.csv')
         mod.ExportToFile(
-            "Gain Plot 3", 'C:/Users/tee/PycharmProjects/Gain Plot 3.csv'
-        )
+            "Gain Plot 2", _path)
+        _path = os.path.join(_path, 'Gain Plot 3.csv')
         mod.ExportToFile(
-            "Gain Plot 1", 'C:/Users/tee/PycharmProjects/Gain Plot 1.csv'
-        )
+            "Gain Plot 3", _path)
+        _path = os.path.join(_path, 'S Parameter Plot 1.csv')
         mod.ExportToFile(
-            "S Parameter Plot 1", 'C:/Users/tee/PycharmProjects/S Parameter Plot 1.csv'
-        )
+            "S Parameter Plot 1", _path)
 
     def save(self):
         _base_path = os.getcwd()

@@ -75,7 +75,7 @@ class PatchArray:
         h.create_report()
         h.save()
         # h.run()
-        h.csv()
+        h.csv('C:/Users/tee/Desktop', False)
 
 
 if __name__ == '__main__':
